@@ -16,5 +16,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::loadFieldPictures()
 {
+   this->ui->field1OpenGLWidget->setBackground(FieldOpenGLWidget::firstBgImageName);
+   this->ui->field2OpenGLWidget->setBackground(FieldOpenGLWidget::secondBgImageName);
 
 }

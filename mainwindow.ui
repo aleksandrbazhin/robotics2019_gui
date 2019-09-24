@@ -15,164 +15,17 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <widget class="QLabel" name="label">
-      <property name="font">
-       <font>
-        <pointsize>14</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Поле 1</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QComboBox" name="comboBox_2_robot">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>40</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-     </widget>
-    </item>
-    <item row="10" column="0" colspan="4">
-     <widget class="QPushButton" name="sendPushButton">
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>40</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>14</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Отправить на ИК-передатчики</string>
-      </property>
-     </widget>
-    </item>
-    <item row="7" column="1">
-     <widget class="QComboBox" name="comboBox_2_3">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>40</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="2">
-     <widget class="QLabel" name="label_5">
-      <property name="text">
-       <string>Полоса 2</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="2">
-     <widget class="QComboBox" name="comboBox_1_2">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>40</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="3">
-     <widget class="QComboBox" name="comboBox_1_3">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>40</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="label_3">
-      <property name="text">
-       <string>Робот</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="3">
-     <widget class="QLabel" name="label_6">
-      <property name="text">
-       <string>Полоса 3</string>
-      </property>
-     </widget>
-    </item>
-    <item row="6" column="2">
-     <widget class="QLabel" name="label_9">
-      <property name="text">
-       <string>Полоса 2</string>
-      </property>
-     </widget>
-    </item>
-    <item row="7" column="2">
-     <widget class="QComboBox" name="comboBox_2_2">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>40</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="0" colspan="4">
-     <widget class="QGraphicsView" name="field1GraphicsView"/>
-    </item>
-    <item row="9" column="0" colspan="4">
-     <widget class="QGraphicsView" name="field2GraphicsView"/>
-    </item>
     <item row="1" column="1">
      <widget class="QLabel" name="label_4">
       <property name="text">
        <string>Полоса 1</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="2">
+     <widget class="QLabel" name="label_9">
+      <property name="text">
+       <string>Полоса 2</string>
       </property>
      </widget>
     </item>
@@ -231,26 +84,43 @@
       </item>
      </widget>
     </item>
-    <item row="4" column="0">
-     <widget class="QLabel" name="label_2">
+    <item row="8" column="1">
+     <widget class="QComboBox" name="comboBox_2_3">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
       <property name="font">
        <font>
-        <pointsize>14</pointsize>
+        <pointsize>12</pointsize>
        </font>
       </property>
-      <property name="text">
-       <string>Поле 2</string>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QComboBox" name="comboBox_2_robot">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
      </widget>
     </item>
-    <item row="6" column="0">
-     <widget class="QLabel" name="label_7">
-      <property name="text">
-       <string>Робот</string>
-      </property>
-     </widget>
-    </item>
-    <item row="7" column="3">
+    <item row="8" column="3">
      <widget class="QComboBox" name="comboBox_2_1">
       <property name="enabled">
        <bool>true</bool>
@@ -268,24 +138,115 @@
       </property>
      </widget>
     </item>
-    <item row="6" column="1">
+    <item row="8" column="0">
+     <widget class="QComboBox" name="comboBox_1_robot">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="1">
      <widget class="QLabel" name="label_8">
       <property name="text">
        <string>Полоса 1</string>
       </property>
      </widget>
     </item>
-    <item row="6" column="3">
+    <item row="2" column="3">
+     <widget class="QComboBox" name="comboBox_1_3">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label">
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Поле 1</string>
+      </property>
+     </widget>
+    </item>
+    <item row="11" column="0" colspan="4">
+     <widget class="QPushButton" name="sendPushButton">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Отправить на ИК-передатчики</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="0">
+     <widget class="QLabel" name="label_7">
+      <property name="text">
+       <string>Робот</string>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="2">
+     <widget class="QComboBox" name="comboBox_2_2">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="3">
      <widget class="QLabel" name="label_10">
       <property name="text">
        <string>Полоса 3</string>
       </property>
      </widget>
     </item>
-    <item row="7" column="0">
-     <widget class="QComboBox" name="comboBox_1_robot">
+    <item row="2" column="2">
+     <widget class="QComboBox" name="comboBox_1_2">
       <property name="enabled">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="minimumSize">
        <size>
@@ -318,8 +279,67 @@
       </property>
      </widget>
     </item>
-    <item row="11" column="0" colspan="4">
+    <item row="1" column="3">
+     <widget class="QLabel" name="label_6">
+      <property name="text">
+       <string>Полоса 3</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="0">
+     <widget class="QLabel" name="label_2">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Поле 2</string>
+      </property>
+     </widget>
+    </item>
+    <item row="12" column="0" colspan="4">
      <widget class="QTextEdit" name="textEdit"/>
+    </item>
+    <item row="10" column="0" colspan="4">
+     <widget class="FieldOpenGLWidget" name="field2OpenGLWidget">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="2">
+     <widget class="QLabel" name="label_5">
+      <property name="text">
+       <string>Полоса 2</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_3">
+      <property name="text">
+       <string>Робот</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0" colspan="4">
+     <widget class="FieldOpenGLWidget" name="field1OpenGLWidget">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -334,6 +354,13 @@
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>FieldOpenGLWidget</class>
+   <extends>QOpenGLWidget</extends>
+   <header>fieldopenglwidget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
