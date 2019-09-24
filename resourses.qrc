@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/images">
+        <file alias="field1.png">images/field1.png</file>
+        <file alias="field2.png">images/field2.png</file>
+        <file alias="select1.png">images/select1.png</file>
+        <file alias="select2.png">images/select2.png</file>
+        <file alias="select3.png">images/select3.png</file>
+		<file alias="select_robot.png">images/select_robot.png</file>
+    </qresource>
+</RCC>

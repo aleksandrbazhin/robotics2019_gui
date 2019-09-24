@@ -17,6 +17,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    void loadFieldPictures();
 };
 
 #endif // MAINWINDOW_H
