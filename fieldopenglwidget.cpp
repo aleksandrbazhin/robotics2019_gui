@@ -13,26 +13,33 @@ const QString FieldOpenGLWidget::thirdColLineImageName = ":/images/select3.png";
 FieldOpenGLWidget::FieldOpenGLWidget(QWidget *parent) :
     QOpenGLWidget(parent)
 {
-    this->robotLineImage = QImage(FieldOpenGLWidget::robotLineImageName);
-    this->firstColLineImage = QImage(FieldOpenGLWidget::firstColLineImageName);
-    this->secondColLineImage = QImage(FieldOpenGLWidget::secondColLineImageName);
-    this->thirdColLineImage = QImage(FieldOpenGLWidget::thirdColLineImageName);
+    this->robotLineImage = QPixmap(FieldOpenGLWidget::robotLineImageName);
+    this->firstColLineImage = QPixmap(FieldOpenGLWidget::firstColLineImageName);
+    this->secondColLineImage = QPixmap(FieldOpenGLWidget::secondColLineImageName);
+    this->thirdColLineImage = QPixmap(FieldOpenGLWidget::thirdColLineImageName);
 }
 
 void FieldOpenGLWidget::setBackground(QString name)
 {
-    this->bgImage = QImage(name);
+    this->bgImage = QPixmap(name);
 }
 
 void FieldOpenGLWidget::paintEvent(QPaintEvent *event)
 {
     QPainter painter;
-
     painter.begin(this);
-    painter.setRenderHint(QPainter::Antialiasing);
-    painter.drawImage(event->rect(), this->bgImage);
-//    painter.fillRect(event->rect(), this->background);
-
+    painter.setRenderHint(QPainter::SmoothPixmapTransform);
+    QPixmap scaled(this->bgImage.scaled(this->rect().width(),
+                                        this->rect().height(),
+                                        Qt::IgnoreAspectRatio,
+                                        Qt::SmoothTransformation));
+    painter.drawPixmap(0,0,scaled);
+    this->fillLines(painter);
     painter.end();
     this->update();
+}
+
+void FieldOpenGLWidget::fillLines(QPainter &painter)
+{
+
 }

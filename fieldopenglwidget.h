@@ -23,11 +23,12 @@ protected:
 
 private:
     QBrush background;
-    QImage bgImage;
-    QImage robotLineImage;
-    QImage firstColLineImage;
-    QImage secondColLineImage;
-    QImage thirdColLineImage;
+    QPixmap bgImage;
+    QPixmap robotLineImage;
+    QPixmap firstColLineImage;
+    QPixmap secondColLineImage;
+    QPixmap thirdColLineImage;
+    void fillLines(QPainter& painter);
 
 };
 
