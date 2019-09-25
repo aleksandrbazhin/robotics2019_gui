@@ -30,10 +30,7 @@ private:
     QPixmap bgImage;
     QPixmap robotPix;
     LinesImagePixmapMap linePixmaps;
-    FieldLinesData linesData = {
-        FieldColumns::none, FieldColumns::none, FieldColumns::none, FieldColumns::none,
-        FieldColumns::none, FieldColumns::none, FieldColumns::none, FieldColumns::none
-    };
+    FieldLinesData linesData = defaultLinesData;
     QRectF lineImageRect;
     QRectF scaledLineRect;
     qreal firstLineScaledOffset;

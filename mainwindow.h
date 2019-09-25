@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <linecombobox.h>
+#include "linesdata.h"
 
 namespace Ui {
 class MainWindow;
@@ -23,8 +24,11 @@ private:
     const std::list<int> defaultAvailableLines = {1, 2, 3, 4, 5, 6, 7, 8};
     std::list<int> availableLines = defaultAvailableLines;
     std::array<int, 8> columnsArray = {0, 0, 0, 0, 0, 0, 0, 0};
+    FieldLinesData field1LinesData = defaultLinesData;
+    FieldLinesData field2LinesData = defaultLinesData;
     void updateSelections();
     void populateComboBox(LineComboBox* combo);
+    FieldColumns index2Field(int i);
 
 private slots:
     void onComboSelect(int, int, int);

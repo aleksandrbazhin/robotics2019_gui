@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "linesdata.h"
+
 #include <QtDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->initCombobox(this->ui->comboBox_2_1, 2, 1);
     this->initCombobox(this->ui->comboBox_2_2, 2, 2);
     this->initCombobox(this->ui->comboBox_2_3, 2, 3);
+
 }
 
 MainWindow::~MainWindow()
@@ -29,21 +30,6 @@ void MainWindow::loadFieldPictures()
 {
    this->ui->field1OpenGLWidget->setBackground(FieldOpenGLWidget::firstBgImageName);
    this->ui->field2OpenGLWidget->setBackground(FieldOpenGLWidget::secondBgImageName);
-//   FieldLinesData d1 = {
-//       FieldColumns::col_three, FieldColumns::robot, FieldColumns::col_one, FieldColumns::blocked,
-//       FieldColumns::blocked, FieldColumns::col_two, FieldColumns::blocked, FieldColumns::blocked
-//   };
-
-//   this->ui->field1OpenGLWidget->setLines(d1);
-//   this->ui->field1OpenGLWidget->update();
-
-//   FieldLinesData d2 = {
-//       FieldColumns::blocked, FieldColumns::blocked, FieldColumns::blocked, FieldColumns::robot,
-//       FieldColumns::col_three, FieldColumns::blocked, FieldColumns::col_two, FieldColumns::col_one
-//   };
-
-//   this->ui->field2OpenGLWidget->setLines(d2);
-    //   this->ui->field2OpenGLWidget->update();
 }
 
 void MainWindow::initCombobox(LineComboBox* combo, int field, int column)
@@ -69,6 +55,10 @@ void MainWindow::updateSelections()
         this->populateComboBox(this->ui->comboBox_1_robot);
         this->populateComboBox(this->ui->comboBox_2_robot);
     }
+    this->ui->field1OpenGLWidget->setLines(this->field1LinesData);
+    this->ui->field1OpenGLWidget->update();
+    this->ui->field2OpenGLWidget->setLines(this->field2LinesData);
+    this->ui->field2OpenGLWidget->update();
 }
 
 void MainWindow::populateComboBox(LineComboBox* combo)
@@ -82,10 +72,42 @@ void MainWindow::populateComboBox(LineComboBox* combo)
     }
 }
 
+// I know, I know
+FieldColumns MainWindow::index2Field(int i)
+{
+    assert(i < 4);
+    switch(i) {
+        case 0:
+            return FieldColumns::robot;
+        case 1:
+            return FieldColumns::col_one;
+        case 2:
+            return FieldColumns::col_two;
+        case 3:
+            return FieldColumns::col_three;
+        default:
+            return FieldColumns::none;
+    }
+}
+
 void MainWindow::onComboSelect(int line_number, int field, int column)
 {
-    qDebug() << line_number;
+    size_t line_index = size_t(line_number - 1);
+    size_t column_index = 0;
+    qDebug() << line_number << line_index << column<< this->index2Field(column);;
+
+    if (field == 1) {
+        column_index = size_t(column - 1);
+        this->field1LinesData[line_index] = this->index2Field(column);
+        this->field2LinesData[line_index] = FieldColumns::blocked;
+    } else if (field == 2) {
+        column_index = size_t(column - 1) + 4;
+        this->field1LinesData[line_index] = FieldColumns::blocked;
+        this->field2LinesData[line_index] = this->index2Field(column);
+    }
+    this->columnsArray[column_index] = line_number;
     this->availableLines.remove(line_number);
+
     qDebug() << this->availableLines;
     this->updateSelections();
 

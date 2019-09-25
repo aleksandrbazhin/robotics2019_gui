@@ -45,42 +45,6 @@
      </widget>
     </item>
     <item row="8" column="1">
-     <widget class="LineComboBox" name="comboBox_2_3">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>40</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="LineComboBox" name="comboBox_2_robot">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>40</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-     </widget>
-    </item>
-    <item row="8" column="3">
      <widget class="LineComboBox" name="comboBox_2_1">
       <property name="enabled">
        <bool>true</bool>
@@ -98,8 +62,44 @@
       </property>
      </widget>
     </item>
-    <item row="8" column="0">
+    <item row="2" column="0">
      <widget class="LineComboBox" name="comboBox_1_robot">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="3">
+     <widget class="LineComboBox" name="comboBox_2_3">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="0">
+     <widget class="LineComboBox" name="comboBox_2_robot">
       <property name="enabled">
        <bool>false</bool>
       </property>
