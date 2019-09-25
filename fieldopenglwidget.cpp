@@ -64,7 +64,7 @@ void FieldOpenGLWidget::computeScalesOffsets()
     this->scaledLineRect.setHeight(qreal(this->lineImageRect.height() * y_scale));
 
     this->firstLineScaledOffset = 0.9 * this->scaledLineRect.height() ;
-    this->everyLineScaledOffset = 0.282 * this->scaledLineRect.height();
+    this->everyLineScaledOffset = 0.265 * this->scaledLineRect.height();
 
     this->robotXScaledWidth = 0.07 * this->scaledLineRect.width();
     this->robotXScaledHeight = 2 * this->scaledLineRect.height();
@@ -79,7 +79,7 @@ void FieldOpenGLWidget::fillLines(QPainter &painter)
     image.fill(0);
     QPainter new_painter;
     new_painter.begin(&image);
-    int offset = int(this->firstLineScaledOffset);
+    qreal offset = this->firstLineScaledOffset;
     for (auto line : this->linesData) {
         if (line != FieldColumns::none) {
             QPixmap scaled_line(this->linePixmaps[line].scaled(
@@ -87,7 +87,8 @@ void FieldOpenGLWidget::fillLines(QPainter &painter)
                                     int(this->scaledLineRect.height()),
                                     Qt::IgnoreAspectRatio,
                                     Qt::SmoothTransformation));
-            new_painter.drawPixmap(0, offset, scaled_line);
+            QPointF draw_point(0, offset);
+            new_painter.drawPixmap(draw_point, scaled_line);
         }
         if (line == FieldColumns::robot) {
             QPixmap scaled_robot(this->robotPix.scaled(
@@ -95,9 +96,8 @@ void FieldOpenGLWidget::fillLines(QPainter &painter)
                                     int(this->robotXScaledHeight),
                                     Qt::IgnoreAspectRatio,
                                     Qt::SmoothTransformation));
-            new_painter.drawPixmap(int(robotXScaledOffset),
-                                   offset + int(robotYScaledOffset),
-                                   scaled_robot);
+            QPointF draw_point(robotXScaledOffset, offset + robotYScaledOffset);
+            new_painter.drawPixmap(draw_point, scaled_robot);
         }
         offset += this->scaledLineRect.height() + this->everyLineScaledOffset;
     }
