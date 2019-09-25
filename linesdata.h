@@ -4,12 +4,15 @@
 #include <array>
 
 enum FieldColumns {
-    robot = 0,
-    one = 1,
-    two = 2,
-    three = 3
+    none,
+    blocked,
+    robot,
+    col_one,
+    col_two,
+    col_three
 };
 
-typedef std::array<FieldColumns, 8> linesData;
+//typedef std::array<FieldColumns, 8> FullLinesData;
+typedef std::array<FieldColumns, 8> FieldLinesData;
 
 #endif // LINESDATA_H
