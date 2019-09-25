@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->initCombobox(this->ui->comboBox_2_1, 2, 1);
     this->initCombobox(this->ui->comboBox_2_2, 2, 2);
     this->initCombobox(this->ui->comboBox_2_3, 2, 3);
-
+    connect(this->ui->resetPushButton, SIGNAL(clicked()), this, SLOT(reset()));
 }
 
 MainWindow::~MainWindow()
@@ -110,10 +110,37 @@ void MainWindow::onComboSelect(int line_number, int field, int column)
         this->onDataReady();
     }
     this->updateSelections();
-
 }
 
 void MainWindow::onDataReady()
 {
     this->ui->sendPushButton->setEnabled(true);
+}
+
+void MainWindow::reset()
+{
+    this->ui->sendPushButton->setEnabled(false);
+
+    this->ui->comboBox_1_robot->setCurrentText("");
+    this->ui->comboBox_1_robot->setEnabled(true);
+    this->ui->comboBox_2_robot->setCurrentText("");
+    this->ui->comboBox_2_robot->setEnabled(true);
+    this->ui->comboBox_1_1->setCurrentText("");
+    this->ui->comboBox_1_1->setEnabled(true);
+    this->ui->comboBox_1_2->setCurrentText("");
+    this->ui->comboBox_1_2->setEnabled(true);
+    this->ui->comboBox_1_3->setCurrentText("");
+    this->ui->comboBox_1_3->setEnabled(true);
+    this->ui->comboBox_2_1->setCurrentText("");
+    this->ui->comboBox_2_1->setEnabled(true);
+    this->ui->comboBox_2_2->setCurrentText("");
+    this->ui->comboBox_2_2->setEnabled(true);
+    this->ui->comboBox_2_3->setCurrentText("");
+    this->ui->comboBox_2_3->setEnabled(true);
+
+    this->availableLines = defaultAvailableLines;
+    this->field1LinesData = defaultLinesData;
+    this->field2LinesData = defaultLinesData;
+
+    this->updateSelections();
 }

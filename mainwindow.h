@@ -33,6 +33,7 @@ private:
 private slots:
     void onComboSelect(int, int, int);
     void onDataReady();
+    void reset();
 
 };
 
