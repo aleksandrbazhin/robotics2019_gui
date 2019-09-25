@@ -94,21 +94,18 @@ void MainWindow::onComboSelect(int line_number, int field, int column)
 {
     size_t line_index = size_t(line_number - 1);
     size_t column_index = 0;
-    qDebug() << line_number << line_index << column<< this->index2Field(column);;
 
     if (field == 1) {
-        column_index = size_t(column - 1);
+        column_index = size_t(column);
         this->field1LinesData[line_index] = this->index2Field(column);
         this->field2LinesData[line_index] = FieldColumns::blocked;
     } else if (field == 2) {
-        column_index = size_t(column - 1) + 4;
+        column_index = size_t(column) + 4;
         this->field1LinesData[line_index] = FieldColumns::blocked;
         this->field2LinesData[line_index] = this->index2Field(column);
     }
     this->columnsArray[column_index] = line_number;
-    this->availableLines.remove(line_number);
-
-    qDebug() << this->availableLines;
+    this->availableLines.removeOne(line_number);
     this->updateSelections();
 
 }

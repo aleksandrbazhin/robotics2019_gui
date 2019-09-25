@@ -21,8 +21,8 @@ private:
     Ui::MainWindow *ui;
     void loadFieldPictures();
     void initCombobox(LineComboBox* combo, int field, int line);
-    const std::list<int> defaultAvailableLines = {1, 2, 3, 4, 5, 6, 7, 8};
-    std::list<int> availableLines = defaultAvailableLines;
+    const QList<int> defaultAvailableLines = {1, 2, 3, 4, 5, 6, 7, 8};
+    QList<int> availableLines = defaultAvailableLines;
     std::array<int, 8> columnsArray = {0, 0, 0, 0, 0, 0, 0, 0};
     FieldLinesData field1LinesData = defaultLinesData;
     FieldLinesData field2LinesData = defaultLinesData;
