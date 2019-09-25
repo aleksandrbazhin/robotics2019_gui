@@ -19,6 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->initCombobox(this->ui->comboBox_2_2, 2, 2);
     this->initCombobox(this->ui->comboBox_2_3, 2, 3);
     connect(this->ui->resetPushButton, SIGNAL(clicked()), this, SLOT(reset()));
+    connect(this->ui->sendPushButton, SIGNAL(clicked()), this, SLOT(sendData()));
 }
 
 MainWindow::~MainWindow()
@@ -122,9 +123,7 @@ void MainWindow::reset()
     this->ui->sendPushButton->setEnabled(false);
 
     this->ui->comboBox_1_robot->setCurrentText("");
-    this->ui->comboBox_1_robot->setEnabled(true);
     this->ui->comboBox_2_robot->setCurrentText("");
-    this->ui->comboBox_2_robot->setEnabled(true);
     this->ui->comboBox_1_1->setCurrentText("");
     this->ui->comboBox_1_1->setEnabled(true);
     this->ui->comboBox_1_2->setCurrentText("");
@@ -138,9 +137,19 @@ void MainWindow::reset()
     this->ui->comboBox_2_3->setCurrentText("");
     this->ui->comboBox_2_3->setEnabled(true);
 
-    this->availableLines = defaultAvailableLines;
+    this->availableLines = this->defaultAvailableLines;
     this->field1LinesData = defaultLinesData;
     this->field2LinesData = defaultLinesData;
+    this->columnsArray = this->defaulColumnsArray;
 
     this->updateSelections();
+}
+
+void MainWindow::sendData()
+{
+    QString str_data = "";
+    for (auto el: this->columnsArray) {
+        str_data += "Положение " + QString::number(el);
+    }
+    this->ui->textEdit->append(str_data);
 }

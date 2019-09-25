@@ -23,6 +23,7 @@ private:
     void initCombobox(LineComboBox* combo, int field, int line);
     const QList<int> defaultAvailableLines = {1, 2, 3, 4, 5, 6, 7, 8};
     QList<int> availableLines = defaultAvailableLines;
+    const QVector<int> defaulColumnsArray = {0, 0, 0, 0, 0, 0, 0, 0};
     QVector<int> columnsArray = {0, 0, 0, 0, 0, 0, 0, 0};
     FieldLinesData field1LinesData = defaultLinesData;
     FieldLinesData field2LinesData = defaultLinesData;
@@ -34,6 +35,7 @@ private slots:
     void onComboSelect(int, int, int);
     void onDataReady();
     void reset();
+    void sendData();
 
 };
 
