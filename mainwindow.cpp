@@ -91,6 +91,13 @@ FieldColumns MainWindow::index2Field(int i)
     }
 }
 
+int MainWindow::encodePosition(int position)
+{
+    assert(position >= 1);
+    assert(position <= 8);
+    return this->encode_table[position - 1];
+}
+
 void MainWindow::onComboSelect(int line_number, int field, int column)
 {
     size_t line_index = size_t(line_number - 1);
@@ -148,8 +155,12 @@ void MainWindow::reset()
 void MainWindow::sendData()
 {
     QString str_data = "";
-    for (auto el: this->columnsArray) {
-        str_data += "Положение " + QString::number(el);
+    QString encoded_data = "";
+    for (auto position: this->columnsArray) {
+        str_data += " " + QString::number(position);
+        encoded_data += " " + QString::number(this->encodePosition(position), 2);
     }
-    this->ui->textEdit->append(str_data);
+    this->ui->textEdit->append("Положение " + str_data);
+    this->ui->textEdit->append("Код Хэмминга " + encoded_data);
+
 }

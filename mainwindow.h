@@ -30,6 +30,10 @@ private:
     void updateSelections();
     void populateComboBox(LineComboBox* combo);
     FieldColumns index2Field(int i);
+    const QVector<int> encode_table = {
+        0b1101001, 0b0101010, 0b1000011, 0b1001100,
+        0b0100101, 0b1100110, 0b0001111, 0b1110000};
+    int encodePosition(int position);
 
 private slots:
     void onComboSelect(int, int, int);
