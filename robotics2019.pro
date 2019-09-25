@@ -31,6 +31,7 @@ SOURCES += \
 
 HEADERS += \
         fieldopenglwidget.h \
+        linesdata.h \
         mainwindow.h
 
 FORMS += \
