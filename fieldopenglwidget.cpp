@@ -72,7 +72,7 @@ void FieldOpenGLWidget::computeScalesOffsets()
     this->robotYScaledOffset = -0.25 * this->robotXScaledHeight;
 }
 
-void FieldOpenGLWidget::fillLines(QPainter &painter)
+void FieldOpenGLWidget::fillLines(QPainter& painter)
 {
     // two step drawing because of bug/strange behavior of painter
     QImage image(this->size(), QImage::Format_ARGB32);

@@ -30,7 +30,7 @@
      </widget>
     </item>
     <item row="2" column="1">
-     <widget class="QComboBox" name="comboBox_1_1">
+     <widget class="LineComboBox" name="comboBox_1_1">
       <property name="minimumSize">
        <size>
         <width>0</width>
@@ -42,50 +42,10 @@
         <pointsize>12</pointsize>
        </font>
       </property>
-      <item>
-       <property name="text">
-        <string>Линия 1</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Линия 2</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Линия 3</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Линия 4</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Линия 5</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Линия 6</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Линия 7</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Линия 8</string>
-       </property>
-      </item>
      </widget>
     </item>
     <item row="8" column="1">
-     <widget class="QComboBox" name="comboBox_2_3">
+     <widget class="LineComboBox" name="comboBox_2_3">
       <property name="enabled">
        <bool>true</bool>
       </property>
@@ -103,7 +63,7 @@
      </widget>
     </item>
     <item row="2" column="0">
-     <widget class="QComboBox" name="comboBox_2_robot">
+     <widget class="LineComboBox" name="comboBox_2_robot">
       <property name="enabled">
        <bool>false</bool>
       </property>
@@ -121,7 +81,7 @@
      </widget>
     </item>
     <item row="8" column="3">
-     <widget class="QComboBox" name="comboBox_2_1">
+     <widget class="LineComboBox" name="comboBox_2_1">
       <property name="enabled">
        <bool>true</bool>
       </property>
@@ -139,7 +99,7 @@
      </widget>
     </item>
     <item row="8" column="0">
-     <widget class="QComboBox" name="comboBox_1_robot">
+     <widget class="LineComboBox" name="comboBox_1_robot">
       <property name="enabled">
        <bool>false</bool>
       </property>
@@ -164,7 +124,7 @@
      </widget>
     </item>
     <item row="2" column="3">
-     <widget class="QComboBox" name="comboBox_1_3">
+     <widget class="LineComboBox" name="comboBox_1_3">
       <property name="enabled">
        <bool>true</bool>
       </property>
@@ -219,7 +179,7 @@
      </widget>
     </item>
     <item row="8" column="2">
-     <widget class="QComboBox" name="comboBox_2_2">
+     <widget class="LineComboBox" name="comboBox_2_2">
       <property name="enabled">
        <bool>true</bool>
       </property>
@@ -244,7 +204,7 @@
      </widget>
     </item>
     <item row="2" column="2">
-     <widget class="QComboBox" name="comboBox_1_2">
+     <widget class="LineComboBox" name="comboBox_1_2">
       <property name="enabled">
        <bool>true</bool>
       </property>
@@ -378,6 +338,11 @@
    <class>FieldOpenGLWidget</class>
    <extends>QOpenGLWidget</extends>
    <header>fieldopenglwidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>LineComboBox</class>
+   <extends>QComboBox</extends>
+   <header>linecombobox.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

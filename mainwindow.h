@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <linecombobox.h>
 
 namespace Ui {
 class MainWindow;
@@ -18,6 +19,15 @@ public:
 private:
     Ui::MainWindow *ui;
     void loadFieldPictures();
+    void initCombobox(LineComboBox* combo, int field, int line);
+    const std::list<int> defaultAvailableLines = {1, 2, 3, 4, 5, 6, 7, 8};
+    std::list<int> availableLines = defaultAvailableLines;
+    std::array<int, 8> columnsArray = {0, 0, 0, 0, 0, 0, 0, 0};
+    void updateSelections();
+    void populateComboBox(LineComboBox* combo);
+
+private slots:
+    void onComboSelect(int, int, int);
 };
 
 #endif // MAINWINDOW_H
