@@ -93,19 +93,27 @@ FieldColumns MainWindow::index2Field(int i)
 void MainWindow::onComboSelect(int line_number, int field, int column)
 {
     size_t line_index = size_t(line_number - 1);
-    size_t column_index = 0;
+    int column_index = 0;
 
     if (field == 1) {
-        column_index = size_t(column);
+        column_index = column;
         this->field1LinesData[line_index] = this->index2Field(column);
         this->field2LinesData[line_index] = FieldColumns::blocked;
     } else if (field == 2) {
-        column_index = size_t(column) + 4;
+        column_index = column + 4;
         this->field1LinesData[line_index] = FieldColumns::blocked;
         this->field2LinesData[line_index] = this->index2Field(column);
     }
     this->columnsArray[column_index] = line_number;
     this->availableLines.removeOne(line_number);
+    if (this->availableLines.size() == 0) {
+        this->onDataReady();
+    }
     this->updateSelections();
 
+}
+
+void MainWindow::onDataReady()
+{
+    this->ui->sendPushButton->setEnabled(true);
 }
