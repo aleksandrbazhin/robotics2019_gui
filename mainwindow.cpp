@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
+#include <QRandomGenerator>
 #include <QtDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -98,6 +98,11 @@ int MainWindow::encodePosition(int position)
     return this->encode_table[position - 1];
 }
 
+int MainWindow::distortPosition(int encodedPosition, int distorted_bit)
+{
+    return encodedPosition ^ (1 << distorted_bit);
+}
+
 void MainWindow::onComboSelect(int line_number, int field, int column)
 {
     size_t line_index = size_t(line_number - 1);
@@ -156,11 +161,27 @@ void MainWindow::sendData()
 {
     QString str_data = "";
     QString encoded_data = "";
+    QString distorted_data = "";
+    QString distorted_data_dec = "";
+    int distorted_pos = QRandomGenerator::global()->bounded(1, 3);
+    int distorted_bit = QRandomGenerator::global()->bounded(0, 6);
+    int count = 0;
+    // BUG adding space at first place
     for (auto position: this->columnsArray) {
         str_data += " " + QString::number(position);
-        encoded_data += " " + QString::number(this->encodePosition(position), 2);
+        int encoded = this->encodePosition(position);
+        int distorted = encoded;
+        if (distorted_pos == count || distorted_pos + 4 == count) {
+            distorted = this->distortPosition(encoded, distorted_bit);
+        }
+        encoded_data += " " + QString::number(encoded, 2).rightJustified(8, '0');
+        distorted_data += " " + QString::number(distorted, 2).rightJustified(8, '0');
+        distorted_data_dec += " " + QString::number(distorted);
+        count ++ ;
     }
-    this->ui->textEdit->append("Положение " + str_data);
-    this->ui->textEdit->append("Код Хэмминга " + encoded_data);
+    this->ui->textEdit->append("Положение: " + str_data);
+    this->ui->textEdit->append("Код Хэмминга:              " + encoded_data);
+    this->ui->textEdit->append("Код Хэмминга с искажением: " + distorted_data);
+    this->ui->textEdit->append("В десятичном виде: " + distorted_data_dec);
 
 }

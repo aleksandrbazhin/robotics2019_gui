@@ -287,6 +287,12 @@
         <height>120</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <family>Consolas</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
      </widget>
     </item>
     <item row="10" column="0" colspan="4">
