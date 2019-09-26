@@ -159,29 +159,29 @@ void MainWindow::reset()
 
 void MainWindow::sendData()
 {
-    QString str_data = "";
-    QString encoded_data = "";
-    QString distorted_data = "";
-    QString distorted_data_dec = "";
+    QStringList str_data;
+    QStringList encoded_data;
+    QStringList distorted_data;
+    QStringList distorted_data_dec;
     int distorted_pos = QRandomGenerator::global()->bounded(1, 3);
     int distorted_bit = QRandomGenerator::global()->bounded(0, 6);
     int count = 0;
     // BUG adding space at first place
     for (auto position: this->columnsArray) {
-        str_data += " " + QString::number(position);
+        str_data.append(QString::number(position));
         int encoded = this->encodePosition(position);
         int distorted = encoded;
         if (distorted_pos == count || distorted_pos + 4 == count) {
             distorted = this->distortPosition(encoded, distorted_bit);
         }
-        encoded_data += " " + QString::number(encoded, 2).rightJustified(8, '0');
-        distorted_data += " " + QString::number(distorted, 2).rightJustified(8, '0');
-        distorted_data_dec += " " + QString::number(distorted);
+        encoded_data.append(QString::number(encoded, 2).rightJustified(8, '0'));
+        distorted_data.append(QString::number(distorted, 2).rightJustified(8, '0'));
+        distorted_data_dec.append(QString::number(distorted));
         count ++ ;
     }
-    this->ui->textEdit->append("Положение: " + str_data);
-    this->ui->textEdit->append("Код Хэмминга:              " + encoded_data);
-    this->ui->textEdit->append("Код Хэмминга с искажением: " + distorted_data);
-    this->ui->textEdit->append("В десятичном виде: " + distorted_data_dec);
+    this->ui->textEdit->append("Положение на поле:         " + str_data.join(" "));
+    this->ui->textEdit->append("Код Хэмминга:              " + encoded_data.join(" "));
+    this->ui->textEdit->append("Код Хэмминга с искажением: " + distorted_data.join(" "));
+    this->ui->textEdit->append("В десятичном виде:         " + distorted_data_dec.join(" "));
 
 }
