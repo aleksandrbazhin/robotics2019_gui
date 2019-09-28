@@ -55,10 +55,10 @@ void MainWindow::updateSelections()
     this->populateComboBox(this->ui->comboBox_2_3);
     if (this->availableLines.size() == 2) {
         this->ui->comboBox_1_robot->setEnabled(true);
-        this->ui->comboBox_2_robot->setEnabled(true);
-    }
-    if (this->availableLines.size() <= 2) {
         this->populateComboBox(this->ui->comboBox_1_robot);
+    }
+    if (this->availableLines.size() == 1) {
+        this->ui->comboBox_2_robot->setEnabled(true);
         this->populateComboBox(this->ui->comboBox_2_robot);
     }
     this->ui->field1OpenGLWidget->setLines(this->field1LinesData);
