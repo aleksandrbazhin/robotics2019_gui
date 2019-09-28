@@ -2,10 +2,13 @@
 #include "ui_mainwindow.h"
 #include <QRandomGenerator>
 #include <QtDebug>
+#include <QDir>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    networkManager(new QNetworkAccessManager(this)),
+    settings(QDir::currentPath()+"/settings.ini", QSettings::IniFormat)
 {
     ui->setupUi(this);
     this->loadFieldPictures();
@@ -20,6 +23,8 @@ MainWindow::MainWindow(QWidget *parent) :
     this->initCombobox(this->ui->comboBox_2_3, 2, 3);
     connect(this->ui->resetPushButton, SIGNAL(clicked()), this, SLOT(reset()));
     connect(this->ui->sendPushButton, SIGNAL(clicked()), this, SLOT(sendData()));
+
+    this->randomizeDistortion();
 }
 
 MainWindow::~MainWindow()
@@ -154,19 +159,18 @@ void MainWindow::reset()
     this->field2LinesData = defaultLinesData;
     this->columnsArray = this->defaulColumnsArray;
 
+    this->randomizeDistortion();
     this->updateSelections();
 }
 
-void MainWindow::sendData()
+QString MainWindow::prepareData()
 {
     QStringList str_data;
     QStringList encoded_data;
     QStringList distorted_data;
     QStringList distorted_data_dec;
-    int distorted_pos = QRandomGenerator::global()->bounded(1, 3);
-    int distorted_bit = QRandomGenerator::global()->bounded(0, 6);
     int count = 0;
-    // BUG adding space at first place
+
     for (auto position: this->columnsArray) {
         str_data.append(QString::number(position));
         int encoded = this->encodePosition(position);
@@ -179,9 +183,26 @@ void MainWindow::sendData()
         distorted_data_dec.append(QString::number(distorted));
         count ++ ;
     }
+    QString data_for_sending = distorted_data_dec.join(" ");
     this->ui->textEdit->append("Положение на поле:         " + str_data.join(" "));
     this->ui->textEdit->append("Код Хэмминга:              " + encoded_data.join(" "));
     this->ui->textEdit->append("Код Хэмминга с искажением: " + distorted_data.join(" "));
-    this->ui->textEdit->append("В десятичном виде:         " + distorted_data_dec.join(" "));
+    this->ui->textEdit->append("В десятичном виде:         " + data_for_sending);
+    return data_for_sending;
+}
 
+void MainWindow::randomizeDistortion()
+{
+    this->distorted_pos = QRandomGenerator::global()->bounded(1, 4);
+    this->distorted_bit = QRandomGenerator::global()->bounded(0, 7);
+}
+
+void MainWindow::sendData()
+{
+    QString data_string = this->prepareData();
+
+    qDebug() << this->settings.value("net/ips");
+    qDebug() << this->settings.value("net/tester_ips");
+
+//    this->networkManager->post()
 }
