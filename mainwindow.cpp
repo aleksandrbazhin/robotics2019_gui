@@ -65,6 +65,8 @@ void MainWindow::updateSelections()
     this->ui->field1OpenGLWidget->update();
     this->ui->field2OpenGLWidget->setLines(this->field2LinesData);
     this->ui->field2OpenGLWidget->update();
+
+    this->paintTeamLabels();
 }
 
 void MainWindow::populateComboBox(LineComboBox* combo)
@@ -127,6 +129,9 @@ void MainWindow::onComboSelect(int line_number, int field, int column)
     if (this->availableLines.size() == 0) {
         this->onDataReady();
     }
+
+    this->isFirstTeamTurn = !isFirstTeamTurn;
+
     this->updateSelections();
 }
 
@@ -195,6 +200,23 @@ void MainWindow::randomizeDistortion()
 {
     this->distorted_pos = QRandomGenerator::global()->bounded(1, 4);
     this->distorted_bit = QRandomGenerator::global()->bounded(0, 7);
+}
+
+void MainWindow::paintTeamLabels()
+{
+    if (this->availableLines.size() == 0) {
+        this->ui->field1_status->setText("");
+        this->ui->field2_status->setText("");
+        return;
+    }
+
+    if (this->isFirstTeamTurn) {
+        this->ui->field1_status->setText("Ход 1 команды");
+        this->ui->field2_status->setText("");
+    } else {
+        this->ui->field1_status->setText("");
+        this->ui->field2_status->setText("Ход 2 команды");
+    }
 }
 
 void MainWindow::sendData()

@@ -32,6 +32,7 @@ private:
     QNetworkAccessManager *networkManager;
     QString prepareData();
     void randomizeDistortion();
+    void paintTeamLabels();
     QSettings settings;
     FieldLinesData field1LinesData = defaultLinesData;
     FieldLinesData field2LinesData = defaultLinesData;
@@ -45,6 +46,7 @@ private:
     };
     int distorted_pos;
     int distorted_bit;
+    bool isFirstTeamTurn = true;
 
 private slots:
     void onComboSelect(int, int, int);
