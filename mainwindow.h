@@ -8,6 +8,8 @@
 #include <QSettings>
 #include <QTimer>
 #include "linesdata.h"
+#include <QSerialPort>
+#include <QQueue>
 
 namespace Ui {
 class MainWindow;
@@ -34,7 +36,12 @@ private:
     QString prepareData();
     void randomizeDistortion();
     void paintTeamLabels();
+    bool openSerialPort(QString port_name, int baud_rate);
+    void sendDataByNet();
+    void sendDataBySerial();
+    void sendNextInSerialQueue();
     QSettings settings;
+    QSerialPort *serial = nullptr;
     FieldLinesData field1LinesData = defaultLinesData;
     FieldLinesData field2LinesData = defaultLinesData;
     const QVector<int> defaulColumnsArray = {0, 0, 0, 0, 0, 0, 0, 0};
@@ -48,6 +55,9 @@ private:
     int distorted_pos;
     int distorted_bit;
     bool isFirstTeamTurn = true;
+    QQueue<QString> serialPortsQueue;
+    QString dataToSend = "";
+    QString tempSerialReceive = "";
 
 private slots:
     void onComboSelect(int, int, int);
@@ -55,6 +65,8 @@ private slots:
     void reset();
     void sendData();
     void onNetworkResponse(QNetworkReply *reply);
+    void onSerialReturn();
+    void onSerialError(QSerialPort::SerialPortError error);
 
 };
 

@@ -8,7 +8,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     networkManager(new QNetworkAccessManager(this)),
-    settings(QDir::currentPath()+"/settings.ini", QSettings::IniFormat)
+    settings(QDir::currentPath()+"/settings.ini", QSettings::IniFormat),
+    serial(new QSerialPort(this))
 {
     ui->setupUi(this);
     this->loadFieldPictures();
@@ -23,10 +24,20 @@ MainWindow::MainWindow(QWidget *parent) :
     this->initCombobox(this->ui->comboBox_2_3, 2, 3);
     connect(this->ui->resetPushButton, SIGNAL(clicked()), this, SLOT(reset()));
     connect(this->ui->sendPushButton, SIGNAL(clicked()), this, SLOT(sendData()));
-    connect(this->networkManager, &QNetworkAccessManager::finished,
-            this, &MainWindow::onNetworkResponse);
 
     this->randomizeDistortion();
+
+    if (this->settings.value("gen/connection")  == "net") {
+        connect(this->networkManager, &QNetworkAccessManager::finished,
+                this, &MainWindow::onNetworkResponse);
+    } else if (this->settings.value("gen/connection")  == "com") {
+        connect(this->serial, &QSerialPort::readyRead,
+                this, &MainWindow::onSerialReturn);
+        connect(this->serial, &QSerialPort::errorOccurred,
+                this, &MainWindow::onSerialError);
+    } else {
+        this->ui->textEdit->append("ERROR: Connection type not specified in setting.ini");
+    }
 }
 
 MainWindow::~MainWindow()
@@ -144,6 +155,7 @@ void MainWindow::onDataReady()
 
 void MainWindow::reset()
 {
+    this->dataToSend = "";
     this->ui->sendPushButton->setEnabled(false);
 
     this->ui->comboBox_1_robot->setCurrentText("");
@@ -222,14 +234,68 @@ void MainWindow::paintTeamLabels()
     }
 }
 
-void MainWindow::sendData()
+bool MainWindow::openSerialPort(QString port_name, int baud_rate)
 {
-    QString data_string = this->prepareData();
+    this->serial->setPortName(port_name);
+    this->serial->setBaudRate(baud_rate);
+    this->serial->setDataBits(QSerialPort::Data8);
+    this->serial->setParity(QSerialPort::NoParity);
+    this->serial->setStopBits(QSerialPort::OneStop);
+    if (this->serial->open(QIODevice::ReadWrite)) {
+        serial->setDataTerminalReady(true);
+        return true;
+    } else {
+        return false;
+    }
+}
 
+
+void MainWindow::sendDataByNet()
+{
     for (auto ip: this->settings.value("net/ips").toStringList()) {
-        QString req_string = "http://" + ip + "/set/" + data_string;
+        QString req_string = "http://" + ip + "/set/" + this->dataToSend;
         this->networkManager->get(QNetworkRequest(QUrl(req_string)));
         this->ui->textEdit->append("Requesting: " + req_string);
+    }
+}
+
+void MainWindow::sendNextInSerialQueue()
+{
+    if (this->serial->isOpen()) {
+        this->serial->close();
+        this->ui->textEdit->append("Port closed");
+    }
+    if (this->serialPortsQueue.isEmpty()) {
+        return;
+    }
+    QString port_name = this->serialPortsQueue.dequeue();
+    int baud_rate = this->settings.value("com/baud_rate").toInt();
+    if (this->openSerialPort(port_name, baud_rate)) {
+        this->ui->textEdit->append("Port " + port_name + " opened");
+//        this->serial->write(this->dataToSend.toLatin1());
+        this->serial->write("FUCK!");
+    } else {
+        this->ui->textEdit->append("ERROR: cannot open port " + port_name);
+    }
+}
+
+void MainWindow::sendDataBySerial()
+{
+    for (auto port_name: this->settings.value("com/ports").toStringList()) {
+        this->serialPortsQueue.enqueue(port_name);
+    }
+    this->sendNextInSerialQueue();
+}
+
+void MainWindow::sendData()
+{
+    this->dataToSend = this->prepareData();
+    if (this->settings.value("gen/connection")  == "net") {
+        this->sendDataByNet();
+    } else if (this->settings.value("gen/connection")  == "com") {
+        this->sendDataBySerial();
+    } else {
+        this->ui->textEdit->append("ERROR: Connection type not specified in setting.ini");
     }
 }
 
@@ -241,5 +307,30 @@ void MainWindow::onNetworkResponse(QNetworkReply *reply)
                                    " AT: " + reply->request().url().toString());
     } else if (reply->readAll() == "OK") {
         this->ui->textEdit->append("OK:         " + reply->request().url().toString());
+    }
+}
+
+void MainWindow::onSerialReturn()
+{
+    const QByteArray data = serial->readAll();
+    QString data_string(data);
+    if (data_string.endsWith("\n")) {
+        this->ui->textEdit->append("Success: " + tempSerialReceive + data_string);
+        this->tempSerialReceive = "";
+        this->sendNextInSerialQueue();
+    } else {
+        this->tempSerialReceive += data_string;
+    }
+}
+
+void MainWindow::onSerialError(QSerialPort::SerialPortError error)
+{
+    if (error != QSerialPort::NoError) {
+        if (error == QSerialPort::ResourceError || error == QSerialPort::OpenError) {
+            if (this->serial->isOpen())
+                this->serial->close();
+        }
+        this->ui->textEdit->append("ERROR: Serial: " + this->serial->errorString());
+        this->sendNextInSerialQueue();
     }
 }
