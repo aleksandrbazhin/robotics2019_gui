@@ -23,6 +23,8 @@ MainWindow::MainWindow(QWidget *parent) :
     this->initCombobox(this->ui->comboBox_2_3, 2, 3);
     connect(this->ui->resetPushButton, SIGNAL(clicked()), this, SLOT(reset()));
     connect(this->ui->sendPushButton, SIGNAL(clicked()), this, SLOT(sendData()));
+    connect(this->networkManager, &QNetworkAccessManager::finished,
+            this, &MainWindow::onNetworkResponse);
 
     this->randomizeDistortion();
 }
@@ -193,6 +195,7 @@ QString MainWindow::prepareData()
     this->ui->textEdit->append("Код Хэмминга:              " + encoded_data.join(" "));
     this->ui->textEdit->append("Код Хэмминга с искажением: " + distorted_data.join(" "));
     this->ui->textEdit->append("В десятичном виде:         " + data_for_sending);
+    //this->ui->textEdit->verticalScrollBar.
     return data_for_sending;
 }
 
@@ -223,8 +226,20 @@ void MainWindow::sendData()
 {
     QString data_string = this->prepareData();
 
-    qDebug() << this->settings.value("net/ips");
-    qDebug() << this->settings.value("net/tester_ips");
+    for (auto ip: this->settings.value("net/ips").toStringList()) {
+        QString req_string = "http://" + ip + "/set/" + data_string;
+        this->networkManager->get(QNetworkRequest(QUrl(req_string)));
+        this->ui->textEdit->append("Requesting: " + req_string);
+    }
+}
 
-//    this->networkManager->post()
+void MainWindow::onNetworkResponse(QNetworkReply *reply)
+{
+    if(reply->error())
+    {
+        this->ui->textEdit->append("ERROR: " + reply->errorString() +
+                                   " AT: " + reply->request().url().toString());
+    } else if (reply->readAll() == "OK") {
+        this->ui->textEdit->append("OK:         " + reply->request().url().toString());
+    }
 }

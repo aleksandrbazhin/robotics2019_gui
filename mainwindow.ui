@@ -299,6 +299,12 @@
         <pointsize>9</pointsize>
        </font>
       </property>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <property name="acceptRichText">
+       <bool>false</bool>
+      </property>
      </widget>
     </item>
     <item row="10" column="0" colspan="4">

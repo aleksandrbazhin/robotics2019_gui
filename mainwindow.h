@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <linecombobox.h>
 #include <QNetworkAccessManager>
+#include <QNetworkReply>
 #include <QSettings>
 #include <QTimer>
 #include "linesdata.h"
@@ -53,6 +54,7 @@ private slots:
     void onDataReady();
     void reset();
     void sendData();
+    void onNetworkResponse(QNetworkReply *reply);
 
 };
 
