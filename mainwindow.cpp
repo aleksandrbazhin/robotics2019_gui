@@ -227,7 +227,7 @@ void MainWindow::sendData()
     QString data_string = this->prepareData();
 
     for (auto ip: this->settings.value("net/ips").toStringList()) {
-        QString req_string = "http://" + ip + "/set/" + data_string;
+        QString req_string = "http://" + ip + "/set?data=" + data_string;
         this->networkManager->get(QNetworkRequest(QUrl(req_string)));
         this->ui->textEdit->append("Requesting: " + req_string);
     }
