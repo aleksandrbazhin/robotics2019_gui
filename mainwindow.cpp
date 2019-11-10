@@ -145,6 +145,7 @@ void MainWindow::onDataReady()
 void MainWindow::reset()
 {
     this->ui->sendPushButton->setEnabled(false);
+    this->isFirstTeamTurn = true;
 
     this->ui->comboBox_1_robot->setCurrentText("");
     this->ui->comboBox_2_robot->setCurrentText("");
@@ -208,17 +209,17 @@ void MainWindow::randomizeDistortion()
 void MainWindow::paintTeamLabels()
 {
     if (this->availableLines.size() == 0) {
-        this->ui->field1_status->setText("");
-        this->ui->field2_status->setText("");
+        this->ui->field2_status->setVisible(false);
+        this->ui->field2_status->setVisible(false);
         return;
     }
 
     if (this->isFirstTeamTurn) {
-        this->ui->field1_status->setText("Ход 1 команды");
-        this->ui->field2_status->setText("");
+        this->ui->field1_status->setVisible(true);
+        this->ui->field2_status->setVisible(false);
     } else {
-        this->ui->field1_status->setText("");
-        this->ui->field2_status->setText("Ход 2 команды");
+        this->ui->field1_status->setVisible(false);
+        this->ui->field2_status->setVisible(true);
     }
 }
 

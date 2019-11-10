@@ -315,6 +315,11 @@
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>20</pointsize>
+       </font>
+      </property>
      </widget>
     </item>
     <item row="1" column="2">
@@ -346,15 +351,18 @@
       <property name="font">
        <font>
         <pointsize>12</pointsize>
-        <weight>50</weight>
-        <bold>false</bold>
+        <weight>75</weight>
+        <bold>true</bold>
        </font>
       </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel{ background: rgb(0, 170, 0) }</string>
+      </property>
       <property name="text">
-       <string/>
+       <string>Ход 2 команды</string>
       </property>
       <property name="alignment">
-       <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </item>
@@ -363,15 +371,21 @@
       <property name="font">
        <font>
         <pointsize>12</pointsize>
-        <weight>50</weight>
-        <bold>false</bold>
+        <weight>75</weight>
+        <bold>true</bold>
        </font>
       </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel{ background: rgb(0, 170, 0) }</string>
+      </property>
+      <property name="lineWidth">
+       <number>1</number>
+      </property>
       <property name="text">
-       <string/>
+       <string>Ход 1 команды</string>
       </property>
       <property name="alignment">
-       <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </item>
