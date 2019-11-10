@@ -29,10 +29,9 @@ private:
     void populateComboBox(LineComboBox* combo);
     FieldColumns index2Field(int i);
     int encodePosition(int position);
-    int distortPosition(int encodedPosition, int distorted_bit);
+    QVector<int> distortPosition(const QVector<int> &encoded_data);
     QNetworkAccessManager *networkManager;
     QString prepareData();
-    void randomizeDistortion();
     void paintTeamLabels();
     QSettings settings;
     FieldLinesData field1LinesData = defaultLinesData;
@@ -45,8 +44,8 @@ private:
         0b1101001, 0b0101010, 0b1000011, 0b1001100,
         0b0100101, 0b1100110, 0b0001111, 0b1110000
     };
-    int distorted_pos;
-    int distorted_bit;
+//    int distorted_pos;
+//    int distorted_bit;
     bool isFirstTeamTurn = true;
 
 private slots:

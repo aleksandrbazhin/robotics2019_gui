@@ -26,7 +26,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this->networkManager, &QNetworkAccessManager::finished,
             this, &MainWindow::onNetworkResponse);
 
-    this->randomizeDistortion();
+//    this->randomizeDistortion();
 }
 
 MainWindow::~MainWindow()
@@ -107,9 +107,25 @@ int MainWindow::encodePosition(int position)
     return this->encode_table[position - 1];
 }
 
-int MainWindow::distortPosition(int encodedPosition, int distorted_bit)
+QVector<int> MainWindow::distortPosition(const QVector<int> &encoded_data)
 {
-    return encodedPosition ^ (1 << distorted_bit);
+    QVector<int> distorted = encoded_data;
+    const QVector<int> checkbits = {0, 1, 3};
+    const QVector<int> databits = {2, 4, 5, 6};
+    // position checkbit of which to flip
+    int distorted_checkbit_position = QRandomGenerator::global()->bounded(1, 4);
+    int distorted_checkbit = checkbits[QRandomGenerator::global()->bounded(0, 2)];
+    // position databit of which to flip
+    int distorted_databit_position = QRandomGenerator::global()->bounded(1, 4);
+    while (distorted_checkbit_position == distorted_databit_position) {
+        distorted_databit_position = QRandomGenerator::global()->bounded(1, 4);
+    }
+    int distorted_databit = databits[QRandomGenerator::global()->bounded(0, 3)];
+    distorted[distorted_checkbit_position] ^= (1 << distorted_checkbit);
+    distorted[distorted_checkbit_position + 4] ^= (1 << distorted_checkbit);
+    distorted[distorted_databit_position] ^= (1 << distorted_databit);
+    distorted[distorted_databit_position + 4] ^= (1 << distorted_databit);
+    return distorted;
 }
 
 void MainWindow::onComboSelect(int line_number, int field, int column)
@@ -167,43 +183,37 @@ void MainWindow::reset()
     this->field2LinesData = defaultLinesData;
     this->columnsArray = this->defaulColumnsArray;
 
-    this->randomizeDistortion();
+//    this->randomizeDistortion();
     this->updateSelections();
 }
 
 QString MainWindow::prepareData()
 {
     QStringList str_data;
-    QStringList encoded_data;
-    QStringList distorted_data;
-    QStringList distorted_data_dec;
-    int count = 0;
+    QStringList encoded_string_data;
+    QVector<int> encoded_data, disrtorted_data;
 
     for (auto position: this->columnsArray) {
         str_data.append(QString::number(position));
         int encoded = this->encodePosition(position);
-        int distorted = encoded;
-        if (distorted_pos == count || distorted_pos + 4 == count) {
-            distorted = this->distortPosition(encoded, distorted_bit);
-        }
-        encoded_data.append(QString::number(encoded, 2).rightJustified(8, '0'));
-        distorted_data.append(QString::number(distorted, 2).rightJustified(8, '0'));
-        distorted_data_dec.append(QString::number(distorted));
-        count ++ ;
+        encoded_data.append(encoded);
+        encoded_string_data.append(QString::number(encoded, 2).rightJustified(8, '0'));
     }
-    QString data_for_sending = distorted_data_dec.join(" ");
-    this->ui->textEdit->append("Положение на поле:         " + str_data.join(" "));
-    this->ui->textEdit->append("Код Хэмминга:              " + encoded_data.join(" "));
-    this->ui->textEdit->append("Код Хэмминга с искажением: " + distorted_data.join(" "));
-    this->ui->textEdit->append("В десятичном виде:         " + data_for_sending);
-    //this->ui->textEdit->verticalScrollBar.
-    return data_for_sending;
-}
+    QVector<int> distorted_data = this->distortPosition(encoded_data);
+    QStringList distorted_string_data;
+    QStringList distorted_string_data_dec;
 
-void MainWindow::randomizeDistortion()
-{
-    this->distorted_pos = QRandomGenerator::global()->bounded(1, 4);
-    this->distorted_bit = QRandomGenerator::global()->bounded(0, 7);
+    for (auto distorted: distorted_data) {
+        distorted_string_data.append(QString::number(distorted, 2).rightJustified(8, '0'));
+        distorted_string_data_dec.append(QString::number(distorted));
+    }
+
+    QString data_for_sending = distorted_string_data_dec.join(" ");
+    this->ui->textEdit->append("Положение на поле:         " + str_data.join(" "));
+    this->ui->textEdit->append("Код Хэмминга:              " + encoded_string_data.join(" "));
+    this->ui->textEdit->append("Код Хэмминга с искажением: " + distorted_string_data.join(" "));
+    this->ui->textEdit->append("В десятичном виде:         " + data_for_sending);
+    return data_for_sending;
 }
 
 void MainWindow::paintTeamLabels()
