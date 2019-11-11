@@ -246,11 +246,9 @@ void MainWindow::sendData()
 
 void MainWindow::onNetworkResponse(QNetworkReply *reply)
 {
-    if(reply->error())
-    {
-        this->ui->textEdit->append("ERROR: " + reply->errorString() +
-                                   " AT: " + reply->request().url().toString());
-    } else if (reply->readAll() == "OK") {
-        this->ui->textEdit->append("OK:         " + reply->request().url().toString());
+    if (reply->error()) {
+        this->ui->textEdit->append("ERROR   at: " + reply->request().url().host() + ", error msg: " + reply->errorString());
+    } else {
+        this->ui->textEdit->append("SUCCESS at: " + reply->request().url().host() + ", response: " + reply->readAll() );
     }
 }
