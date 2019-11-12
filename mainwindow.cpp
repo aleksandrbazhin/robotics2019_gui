@@ -236,9 +236,14 @@ void MainWindow::paintTeamLabels()
 void MainWindow::sendData()
 {
     QString data_string = this->prepareData();
-
+    QStringList offsets = this->settings.value("net/time_offsets").toStringList();
+    int offset_count = 0;
     for (auto ip: this->settings.value("net/ips").toStringList()) {
         QString req_string = "http://" + ip + "/set?data=" + data_string;
+        if (offsets.length() > offset_count) {
+            req_string += "&offset=" + offsets[offset_count];
+        }
+        offset_count++;
         this->networkManager->get(QNetworkRequest(QUrl(req_string)));
         this->ui->textEdit->append("Requesting: " + req_string);
     }
