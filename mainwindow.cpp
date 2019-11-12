@@ -185,6 +185,7 @@ void MainWindow::reset()
 
 //    this->randomizeDistortion();
     this->updateSelections();
+    this->ui->textEdit->clear();
 }
 
 QString MainWindow::prepareData()
@@ -235,6 +236,7 @@ void MainWindow::paintTeamLabels()
 
 void MainWindow::sendData()
 {
+    this->ui->textEdit->clear();
     QString data_string = this->prepareData();
     QStringList offsets = this->settings.value("net/time_offsets").toStringList();
     int offset_count = 0;
