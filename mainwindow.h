@@ -44,9 +44,8 @@ private:
         0b1101001, 0b0101010, 0b1000011, 0b1001100,
         0b0100101, 0b1100110, 0b0001111, 0b1110000
     };
-//    int distorted_pos;
-//    int distorted_bit;
     bool isFirstTeamTurn = true;
+    QString data_string;
 
 private slots:
     void onComboSelect(int, int, int);
@@ -54,7 +53,7 @@ private slots:
     void reset();
     void sendData();
     void onNetworkResponse(QNetworkReply *reply);
-
+    void checkIRReceive();
 };
 
 #endif // MAINWINDOW_H

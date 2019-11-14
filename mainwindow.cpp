@@ -237,9 +237,9 @@ void MainWindow::paintTeamLabels()
 void MainWindow::sendData()
 {
     this->ui->textEdit->clear();
-    QString data_string = this->prepareData();
+    this->data_string = this->prepareData();
     for (auto ip: this->settings.value("net/ips").toStringList()) {
-        QString req_string = "http://" + ip + "/set?data=" + data_string;
+        QString req_string = "http://" + ip + "/set?data=" + this->data_string;
         this->networkManager->get(QNetworkRequest(QUrl(req_string)));
         this->ui->textEdit->append("Requesting:                " + req_string);
     }
@@ -251,7 +251,24 @@ void MainWindow::onNetworkResponse(QNetworkReply *reply)
         this->ui->textEdit->append("ERROR   at:                " +
                                    reply->request().url().host() + ", error msg: " + reply->errorString());
     } else {
-        this->ui->textEdit->append("SUCCESS at:                " +
-                                   reply->request().url().host() + ", response: " + reply->readAll() );
+        QString response = reply->readAll(), host = reply->request().url().host();
+        if (this->settings.value("net/ips").toStringList().contains(host)) {
+            this->ui->textEdit->append("IR transmitter response:   " + response + "  at: " + host);
+            QTimer::singleShot(300, this, SLOT(checkIRReceive()));
+        } else if (this->settings.value("net/tester_ips").toStringList().contains(host)) {
+            this->ui->textEdit->append("IR tester response:        " + response + "          at: " + host);
+            QString test_result = (response.trimmed() == this->data_string.trimmed())
+                    ? "SUCCESS" : "FAIL   ";
+            this->ui->textEdit->append("TEST :                     "  + test_result);
+        }
+    }
+}
+
+void MainWindow::checkIRReceive()
+{
+    for (auto ip: this->settings.value("net/tester_ips").toStringList()) {
+        QString req_string = "http://" + ip + "/test";
+        this->networkManager->get(QNetworkRequest(QUrl(req_string)));
+        this->ui->textEdit->append("Testing IR:                " + req_string);
     }
 }
